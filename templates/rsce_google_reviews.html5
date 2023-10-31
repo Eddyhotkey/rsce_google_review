@@ -1,0 +1,41 @@
+<?php
+
+$api_key = $this-> api_key;
+$place_id = $this-> place_id;
+
+
+$url = "https://maps.googleapis.com/maps/api/place/details/json?fields=rating,user_ratings_total&place_id=$place_id&key=$api_key";
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+curl_close($ch);
+
+
+$data = json_decode($response, true);
+
+$rating = $data['result']['rating'];
+$userRatingsTotal = $data['result']['user_ratings_total'];
+$formattedRating = number_format($rating, 1);
+?>
+
+<div class ="rsce_google_review">
+  <?php if ( $icon= $this->arrData['getImageObject']($this -> image )): ?>
+    <img
+      class=""
+      src="<?php echo $icon->src ?>"
+      alt="<?php echo $icon->alt ?: $this->image_alt ?>"
+      title="<?= $this->image_title ?>"
+      <?php echo $icon->imgSize ?>
+    >
+  <?php endif; ?>
+  <div class="rsce_google_review__container">
+    <p class="rsce_google_review__title">
+      Google Bewertung
+    </p>
+    <p id="ratingStars"><span id="rating"> <?= $formattedRating ?></span> <span id="stars"><?= str_repeat('<span class="star">&#9733;</span>', $formattedRating) ?></span></p>
+
+    <p class="rsce_google_review__text">Basierend auf <span id="userRatingsTotal"><?= $userRatingsTotal ?></span>
+      Bewertungen!</p>
+  </div>
+</div>
