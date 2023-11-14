@@ -17,6 +17,20 @@ return array(
     'type' => 'none',
   ),
   'fields' => array(
+    ### group ###
+    'company_group' => array(
+      'label' => array('Name des Unternehmens', 'Hier sollen Sie den Name des Unternehmens eingeben'),
+      'inputType' => 'group',
+    ),
+
+    ### txt ###
+    'company_name' => array(
+      'label' => array(
+        'de' => array('Name des Unternehmens', 'Hier sollen Sie den Name des Unternehmens eingeben'),
+      ),
+      'inputType' => 'text',
+      'eval' => array('tl_class' => 'w50 clr'),
+    ),
 
     ### group ###
     'google_group' => array(
